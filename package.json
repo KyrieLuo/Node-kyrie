@@ -1,0 +1,29 @@
+{
+  "name": "Nodekyrie",
+  "version": "1.0.0",
+  "description": "Node实战博客",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KyrieLuo/Node-kyrie.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KyrieLuo/Node-kyrie/issues"
+  },
+  "homepage": "https://github.com/KyrieLuo/Node-kyrie#readme",
+  "dependencies": {
+    "koa": "^2.8.1",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.2.1",
+    "mongoose": "^5.6.13",
+    "pug": "^2.0.4"
+  }
+}
