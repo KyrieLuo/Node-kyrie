@@ -22,19 +22,19 @@ block main
         const data = obj.data
         // 评论id
         const commentId = data._id
+        console.log(commentId)
         // 文章id
         const articleId = data.article._id
-
 
         if(obj.event !== "del") return
 
         layer.confirm("确认删除？", () => {
           $.ajax({
-            method: "delete",
+            method: "post",
             url: "/comment/" + commentId,
             data: {
               // 发送文章id值，减少后台查询
-              articleId
+              articleId,
             },
             success(res){
               if(res.state){

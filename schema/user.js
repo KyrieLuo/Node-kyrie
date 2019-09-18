@@ -3,6 +3,10 @@ const { Schema, db } = require('./connect')
 const UserSchema = new Schema({
   username: String,
   password: String,
+  role: {
+    type: Boolean,
+    default: false,
+  },
   avatar: {
     type: String,
     default: '/avatar/default.jpg'

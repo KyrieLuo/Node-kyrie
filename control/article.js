@@ -28,7 +28,7 @@ exports.add = async ctx => {
     acl.save((err, data) => {
       if (err) return rej('文章发表失败')
       // 文章发表成功，用户文章发表数+1
-      User.update({_id: data.author},{$inc: {articleNum: 1}})
+      User.updateOne({_id: data.author},{$inc: {articleNum: 1}})
         .then(data => data)
         .catch(err => console.log(err))
 
@@ -94,7 +94,6 @@ exports.detail = async ctx => {
     .populate('from', 'username avatar')
     .then(data => data)
     .catch(err => err)
-  console.log(comment)
 
   await ctx.render('article', {
     article,

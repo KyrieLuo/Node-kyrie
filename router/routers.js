@@ -3,6 +3,8 @@ const mongoose = require('mongoose'),
           user = require('../control/user'),
        article = require('../control/article'),
        comment = require('../control/comment'),
+         admin = require('../control/admin'),
+        upload = require('../util/upload'),
         router = new Router;
 
 
@@ -29,5 +31,20 @@ router.get('/page/:id', article.getlist)
 router.get('/article/:id', user.keeplog, article.detail)
 // 提交评论
 router.post('/comment', user.keeplog, comment.save)
+// 后台管理页
+router.get('/admin/:where', admin.index)
+// 头像上传
+router.post('/upload', user.keeplog, upload.single('file'), user.upload)
+// 后台：查看用户评论
+router.get('/user/comments', user.keeplog, comment.comlist)
+// 后台：删除用户评论
+router.post('/comment/:id', user.keeplog, comment.del)
+
+
+router.get('*', async (ctx) => {
+  await ctx.render('404', {
+    title: '404'
+  })
+})
 
 module.exports = router

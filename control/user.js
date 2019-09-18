@@ -83,7 +83,8 @@ exports.login = async (ctx) => {
     ctx.session = {
       username,
       uid: data[0]._id,
-      avatar: data[0].avatar
+      avatar: data[0].avatar,
+      role: data[0].role
     }
 
     await ctx.render('isOk', {
@@ -102,9 +103,14 @@ exports.keeplog = async (ctx, next) => {
   */
   if (ctx.session.isNew) { // isNew为true,则没有状态(为登录), undefined(登录状态)
     if (ctx.cookies.get('username')) {
+      let uid = ctx.cookies.get('uid')
+      const avatar = await User.findById(uid).then(data => data.avatar)
+      
+
       ctx.session = {
         username: ctx.cookies.get('username'),
-        uid: ctx.cookies.get('uid')
+        uid,
+        avatar
       }
     }
   }
@@ -121,4 +127,22 @@ exports.logout = async ctx => {
   ctx.session = null
   // 重定向
   ctx.redirect('/')
+}
+
+// 用户头像上传
+exports.upload = async ctx => {
+  const filename = ctx.req.file.filename
+
+  let data = {}
+  await User.updateOne({_id: ctx.session.uid}, 
+    {$set: {avatar: `/avatar/${filename}`}})
+    .then(result => {
+      data.state = 1,
+      data.msg = '上传成功'
+    }).catch(err => {
+      data.state = 0,
+      data.msg = '上传失败'
+    })
+
+    ctx.body = data
 }

@@ -35,3 +35,23 @@ app.use(body())
 app.use(router.routes()).use(router.allowedMethods())
 // 监听端口
 app.listen(3000, () => {console.log('app is running')})
+
+{
+  const User = require('./schema/user')
+  const encrypt = require('./util/encrypt')
+
+  User
+    .find({username: 'admin'})
+    .then(data => {
+      if (data.length) {
+        return console.log('管理员数据查询成功')
+      }
+      new User({
+        username: 'admin',
+        password: encrypt('666'),
+        role: true,
+      }).save().then(data => console.log('管理员创建成功'))
+
+    })
+    .catch(err => err)
+}
